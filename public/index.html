@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NetPulse — Real-Time Network Monitoring</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">CIC0124 · Computer Networks</p>
+        <h1>NetPulse</h1>
+        <p class="hero-copy">
+          A lightweight platform for real-time telemetry, HTTP submission, TCP/UDP transport relay,
+          and live Wireshark-friendly traffic generation.
+        </p>
+      </div>
+      <div class="status-card">
+        <span id="connectionStatus" class="status-pill status-offline">Offline</span>
+        <strong id="currentUser">Guest</strong>
+        <p id="statusMessage">Sign in to start monitoring.</p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="card auth-card" id="authCard">
+        <div class="card-head">
+          <h2>Access</h2>
+          <p>Register or log in to unlock the dashboard.</p>
+        </div>
+        <div class="auth-grid">
+          <form id="registerForm" class="form-block">
+            <h3>Create account</h3>
+            <label>
+              Name
+              <input name="name" type="text" placeholder="Ana Silva" required />
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" placeholder="ana@example.com" required />
+            </label>
+            <label>
+              Password
+              <input name="password" type="password" placeholder="Minimum 6 characters" required />
+            </label>
+            <button type="submit" class="primary">Register</button>
+          </form>
+
+          <form id="loginForm" class="form-block">
+            <h3>Log in</h3>
+            <label>
+              Email
+              <input name="email" type="email" placeholder="ana@example.com" required />
+            </label>
+            <label>
+              Password
+              <input name="password" type="password" placeholder="Your password" required />
+            </label>
+            <button type="submit" class="secondary">Log in</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="dashboard hidden" id="dashboardArea">
+        <div class="card-grid stats-grid" id="statsGrid">
+          <article class="stat-card">
+            <span>Users</span>
+            <strong id="statUsers">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Telemetry</span>
+            <strong id="statTelemetry">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Alerts</span>
+            <strong id="statAlerts">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Benchmarks</span>
+            <strong id="statBenchmarks">0</strong>
+          </article>
+          <article class="stat-card accent">
+            <span>Average RTT</span>
+            <strong id="statRtt">0 ms</strong>
+          </article>
+          <article class="stat-card accent">
+            <span>HTTP / TCP / UDP</span>
+            <strong id="statChannels">0 / 0 / 0</strong>
+          </article>
+        </div>
+
+        <section class="card split">
+          <div>
+            <div class="card-head">
+              <h2>Submit telemetry over HTTP</h2>
+              <p>Send monitored data through the HTTP API and keep the dashboard updated live.</p>
+            </div>
+            <form id="httpTelemetryForm" class="stacked-form">
+              <div class="two-cols">
+                <label>
+                  Device
+                  <input name="deviceName" type="text" value="Lab Sensor" required />
+                </label>
+                <label>
+                  Metric
+                  <input name="metricName" type="text" value="temperature" required />
+                </label>
+              </div>
+              <div class="two-cols">
+                <label>
+                  Value
+                  <input name="value" type="number" step="0.1" value="24" required />
+                </label>
+                <label>
+                  Unit
+                  <input name="unit" type="text" value="°C" />
+                </label>
+              </div>
+              <div class="two-cols">
+                <label>
+                  Alert threshold
+                  <input name="threshold" type="number" step="0.1" value="30" />
+                </label>
+                <label>
+                  Notes
+                  <input name="notes" type="text" value="Periodic reading" />
+                </label>
+              </div>
+              <button type="submit" class="primary">Send via HTTP</button>
+            </form>
+          </div>
+
+          <div>
+            <div class="card-head">
+              <h2>Relay through TCP or UDP</h2>
+              <p>Generate transport-layer traffic for Wireshark and compare round-trip time.</p>
+            </div>
+            <form id="transportForm" class="stacked-form">
+              <div class="two-cols">
+                <label>
+                  Transport
+                  <select name="protocol">
+                    <option value="TCP">TCP</option>
+                    <option value="UDP">UDP</option>
+                  </select>
+                </label>
+                <label>
+                  Payload size hint
+                  <input name="padding" type="number" min="16" max="2048" value="128" />
+                </label>
+              </div>
+              <div class="two-cols">
+                <label>
+                  Device
+                  <input name="deviceName" type="text" value="Transport Probe" required />
+                </label>
+                <label>
+                  Metric
+                  <input name="metricName" type="text" value="latency" required />
+                </label>
+              </div>
+              <div class="two-cols">
+                <label>
+                  Value
+                  <input name="value" type="number" step="0.1" value="1" required />
+                </label>
+                <label>
+                  Unit
+                  <input name="unit" type="text" value="probe" />
+                </label>
+              </div>
+              <label>
+                Notes
+                <input name="notes" type="text" value="Transport relay example" />
+              </label>
+              <button type="submit" class="secondary">Send via transport relay</button>
+            </form>
+          </div>
+        </section>
+
+        <section class="card split">
+          <div>
+            <div class="card-head">
+              <h2>Benchmark TCP and UDP</h2>
+              <p>Run a controlled set of probes to compare latency and throughput.</p>
+            </div>
+            <form id="benchmarkForm" class="stacked-form">
+              <div class="two-cols">
+                <label>
+                  Iterations
+                  <input name="iterations" type="number" min="1" max="20" value="5" />
+                </label>
+                <label>
+                  Payload size
+                  <input name="payloadSize" type="number" min="16" max="2048" value="128" />
+                </label>
+              </div>
+              <button type="submit" class="primary">Run benchmark</button>
+            </form>
+            <div id="benchmarkResult" class="result-box">No benchmark yet.</div>
+          </div>
+
+          <div class="protocol-box">
+            <div class="card-head">
+              <h2>Protocol overview</h2>
+              <p>Useful when documenting the app protocol in the report and during Wireshark analysis.</p>
+            </div>
+            <ul id="protocolList" class="protocol-list"></ul>
+          </div>
+        </section>
+
+        <section class="card split">
+          <div>
+            <div class="card-head">
+              <h2>Live telemetry</h2>
+              <p>Newest records arrive here through WebSocket pushes.</p>
+            </div>
+            <div id="telemetryFeed" class="feed"></div>
+          </div>
+          <div>
+            <div class="card-head">
+              <h2>Alerts and logs</h2>
+              <p>Threshold alerts and operational logs help validate the platform behavior.</p>
+            </div>
+            <div id="alertFeed" class="feed compact"></div>
+            <div id="logFeed" class="feed compact"></div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>NetPulse · HTTP, WebSocket, TCP and UDP · built for a compact but complete networking project.</p>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

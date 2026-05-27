@@ -1,0 +1,20 @@
+{
+  "name": "netpulse",
+  "version": "1.0.0",
+  "description": "Real-time network monitoring platform for HTTP, WebSocket, TCP and UDP experiments.",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/app.js",
+    "dev": "NODE_ENV=development node server/app.js",
+    "test": "node scripts/smoke-test.js",
+    "traffic:generate": "node scripts/smoke-test.js",
+    "report:build": "cd report && pdflatex -interaction=nonstopmode main.tex && pdflatex -interaction=nonstopmode main.tex",
+    "report:clean": "rm -f report/*.aux report/*.log report/*.out report/*.pdf"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  }
+}

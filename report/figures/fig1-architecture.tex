@@ -1,0 +1,64 @@
+\documentclass[tikz,border=6pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+
+\definecolor{navy}{HTML}{163B65}
+\definecolor{bluefill}{HTML}{F2F6FB}
+\definecolor{greenfill}{HTML}{EFF7F4}
+\definecolor{grayfill}{HTML}{F7F8FA}
+\definecolor{textgray}{HTML}{4A5563}
+
+\begin{document}
+\begin{tikzpicture}[
+  font=\sffamily,
+  >=Latex,
+  every node/.style={align=center},
+  box/.style={
+    rounded corners=2.2mm,
+    draw=navy,
+    line width=0.9pt,
+    fill=white,
+    minimum height=19mm,
+    inner sep=4.5mm
+  },
+  arrow/.style={-{Latex[length=2.4mm]}, line width=1pt, draw=textgray}
+]
+
+\node[box, fill=grayfill, minimum width=42mm] (client) {
+  \textbf{Cliente web}\\
+  Navegador\\
+  HTML / CSS / JS
+};
+
+\node[box, right=16mm of client, minimum width=68mm, minimum height=36mm, fill=bluefill] (server) {
+  \textbf{Servidor NetPulse}\\[1mm]
+  HTTP \;\textbullet\; WebSocket \;\textbullet\; TCP/UDP\\
+  login, telemetria, alertas e benchmark
+};
+
+\node[box, right=16mm of server, fill=grayfill, minimum width=38mm] (analysis) {
+  \textbf{Análise}\\
+  RTT\\
+  vazão\\
+  Wireshark
+};
+
+\node[box, below=14mm of server, fill=greenfill, minimum width=42mm] (storage) {
+  \textbf{Persistência local}\\
+  JSON com usuários, alertas\\
+  logs e métricas
+};
+
+\draw[arrow] (client.east) -- node[above, font=\scriptsize, text=textgray] {requisições} (server.west);
+\draw[arrow] (server.east) -- node[above, font=\scriptsize, text=textgray] {resultados} (analysis.west);
+\draw[arrow] (server.south) -- node[right, font=\scriptsize, text=textgray] {JSON} (storage.north);
+
+\begin{pgfonlayer}{background}
+  \node[draw=navy!16, fill=navy!3, rounded corners=4mm, inner sep=7mm, fit=(client)(server)(analysis)(storage)] {};
+\end{pgfonlayer}
+
+\end{tikzpicture}
+\end{document}
