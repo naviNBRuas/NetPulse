@@ -1,5 +1,7 @@
 # NetPulse
 
+English | [Português](README_PT_BR.md)
+
 NetPulse is a compact real-time monitoring platform built for the CIC0124 Computer Networks project at the University of Brasília. It demonstrates:
 
 - browser-based client interface
@@ -49,8 +51,8 @@ Prerequisites:
 1. Clone the repository and install dependencies:
 
 ```bash
-git clone <repo-url> netpulse
-cd netpulse
+git clone https://github.com/naviNBRuas/NetPulse.git
+cd NetPulse
 npm install
 ```
 

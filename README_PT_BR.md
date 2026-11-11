@@ -1,5 +1,7 @@
 # NetPulse
 
+[English](README.md) | Português
+
 O NetPulse é uma plataforma compacta de monitoramento em tempo real desenvolvida para o projeto da disciplina CIC0124 — Redes de Computadores, na Universidade de Brasília. A aplicação demonstra:
 
 - interface web para o cliente
@@ -49,8 +51,8 @@ Pré-requisitos:
 1. Clone o repositório e instale dependências:
 
 ```bash
-git clone <repo-url> netpulse
-cd netpulse
+git clone https://github.com/naviNBRuas/NetPulse.git
+cd NetPulse
 npm install
 ```
 
@@ -148,3 +150,10 @@ Para testes locais, capture a interface loopback. Filtros úteis:
 - `udp.port == 4002`
 
 O relay de transporte e o benchmark foram criados justamente para gerar tráfego real e fácil de analisar no Wireshark.
+
+## Licença
+
+Este repositório é destinado ao uso acadêmico no projeto de Redes de Computadores.
+
+---
+Os arquivos deste projeto são distribuídos nos termos do arquivo `LICENSE` incluído (MIT por padrão). Consulte o `LICENSE` para mais detalhes.
